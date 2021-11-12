@@ -1,3 +1,3 @@
 # Lab 8 - Arturo & Steven
-Arturo Amaya
+Arturo Amaya  
 Steven Schaeffer
