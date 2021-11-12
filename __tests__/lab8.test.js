@@ -49,10 +49,11 @@ describe('Basic user flow for Website', () => {
     console.log('Checking the "Add to Cart" button...');
     const prodItem = await page.$('product-item');
     const itemShadow = await prodItem.getProperty('shadowRoot');
-    const shadowButton = await itemShadow.$('button');
-    shadowButton.click();
-    const buttonChanged = await shadowButton.innerText['_remoteObject'].value;
-    expect(buttonChanged).toBe('Remove from Cart');
+    let shadowButton = await itemShadow.$('button');
+    await shadowButton.click();
+    const innerText = await shadowButton.getProperty('innerText');
+    const newbuttontext = innertext['_remoteObject'].value;
+    expect(newbuttontext).toBe('Remove from Cart');
     // TODO - Step 2
     // Query a <product-item> element using puppeteer ( checkout page.$() and page.$$() in the docs )
     // Grab the shadowRoot of that element (it's a property), then query a button from that shadowRoot.
