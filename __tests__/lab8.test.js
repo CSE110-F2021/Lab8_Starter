@@ -49,7 +49,7 @@ describe('Basic user flow for Website', () => {
     console.log('Checking the "Add to Cart" button...');
     const prodItem = await page.$('product-item');
     //const itemShadow = await prodItem.getProperty('shadowRoot');
-    const itemShadow = await prodItem.shadowRoot;
+    const itemShadow = prodItem.shadowRoot;
     const shadowButton = await itemShadow.$('button');
     shadowButton.click();
     const buttonChanged = await shadowButton.innerText['_remoteObject'].value;
