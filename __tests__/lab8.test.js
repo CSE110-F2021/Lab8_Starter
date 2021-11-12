@@ -48,7 +48,7 @@ describe('Basic user flow for Website', () => {
   it('Clicking the "Add to Cart" button should change button text', async () => {
     console.log('Checking the "Add to Cart" button...');
     const prodItem = await page.$('product-item');
-    const shadowButton = prodItem.getProperty('shadowRoot').querySelector('button');
+    const shadowButton = prodItem.getProperty('shadowRoot').$('button');
     shadowButton.click();
     const buttonChanged = shadowButton.innerText['_remoteObject'].value;
     expect(buttonChanged).toBe('Remove from Cart');
