@@ -17,3 +17,19 @@ test('checks first invalid phone number', () => {
 test('checks second invalid phone number', () => {
     expect(functions.isPhoneNumber(99)).toBe(false);
 });
+
+test('checks first valid email', () => {
+    expect(functions.isEmail('sschaeff@ucsd.edu')).toBe(true);
+});
+
+test('checks second valid email', () => {
+    expect(functions.isEmail('a1amaya@ucsd.edu')).toBe(true);
+});
+
+test('checks first invalid email', () => {
+    expect(functions.isEmail('CSE@110')).toBe(false);
+});
+
+test('checks second invalid email', () => {
+    expect(functions.isEmail('gmail.com')).toBe(false);
+});
