@@ -25,13 +25,15 @@ describe('Basic user flow for Website', () => {
     const prodItems = await page.$$('product-item');
     console.log(`Checking product item 1/${prodItems.length}`);
     // Grab the .data property of <product-items> to grab all of the json data stored inside
-    data = await prodItems[0].getProperty('data');
-    // Convert that property to JSON
-    plainValue = await data.jsonValue();
-    // Make sure the title, price, and image are populated in the JSON
-    if (plainValue.title.length == 0) { allArePopulated = false; }
-    if (plainValue.price.length == 0) { allArePopulated = false; }
-    if (plainValue.image.length == 0) { allArePopulated = false; }
+    for (let i = 0; i < prodItems.length; i++) {
+      data = await prodItems[i].getProperty('data');
+      // Convert that property to JSON
+      plainValue = await data.jsonValue();
+      // Make sure the title, price, and image are populated in the JSON
+      if (plainValue.title.length == 0) { allArePopulated = false; }
+      if (plainValue.price.length == 0) { allArePopulated = false; }
+      if (plainValue.image.length == 0) { allArePopulated = false; }
+    }
     // Expect allArePopulated to still be true
     expect(allArePopulated).toBe(true);
 
