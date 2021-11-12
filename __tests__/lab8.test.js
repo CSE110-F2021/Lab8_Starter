@@ -52,7 +52,7 @@ describe('Basic user flow for Website', () => {
     let shadowButton = await itemShadow.$('button');
     await shadowButton.click();
     const innerText = await shadowButton.getProperty('innerText');
-    const newbuttontext = innertext['_remoteObject'].value;
+    const newbuttontext = innerText['_remoteObject'].value;
     expect(newbuttontext).toBe('Remove from Cart');
     // TODO - Step 2
     // Query a <product-item> element using puppeteer ( checkout page.$() and page.$$() in the docs )
@@ -68,7 +68,25 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 3
     // Query select all of the <product-item> elements, then for every single product element
     // get the shadowRoot and query select the button inside, and click on it.
+    // use $$ to select all
+    const prodItems = await page.$$('product-item');
+    // start at 1 because we already clicked the first one
+    for (let i=1;i<prodItems.length; i++){
+
+      const itemShadow = await prodItems[i].getProperty('shadowRoot');
+      let shadowButton = await itemShadow.$('button');
+      await shadowButton.click();
+      //const innerText = await shadowButton.getProperty('innerText');
+      //const newbuttontext = innertext['_remoteObject'].value;
+      //expect(newbuttontext).toBe('Remove from Cart');
+    }
+
     // Check to see if the innerText of #cart-count is 20
+    const cart = await page.$('#cart-count');
+    let cartText = await cart.getProperty('innerText');
+    cartText = cartText['_remoteObject'].value;
+    expect(cartText).toBe('20');
+    
   }, 10000);
 
   // Check to make sure that after you reload the page it remembers all of the items in your cart
