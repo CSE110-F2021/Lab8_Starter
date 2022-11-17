@@ -23,8 +23,9 @@ describe('Basic user flow for Website', () => {
     let data, plainValue;
     // Query select all of the <product-item> elements
     const prodItems = await page.$$('product-item');
+    const size = prodItems.length
     // Grab the .data property of <product-items> to grab all of the json data stored inside
-    for (let i = 0; i < prodItems.length; i++) {
+    for (let i = 0; i < size; i++) {
       console.log(`Checking product item ${i}/${prodItems.length}`);
       data = await prodItems[i].getProperty('data');
       // Convert that property to JSON
@@ -73,14 +74,14 @@ describe('Basic user flow for Website', () => {
     const size = itemElList.length;
     for (let i = 1; i < size; i++) {
       const shadowRoot = await itemElList[i].getProperty('shadowRoot');
-      const button = await shadowRoot.waitForSelector('button');
+      const button = await shadowRoot.$('button');
       await button.click();
     }
-    const cartCount = await page.waitForSelector('#cart-count');
+    const cartCount = await page.$('#cart-count');
     const innerText = await cartCount.getProperty('innerText');
     const value = await innerText.jsonValue();
     expect(value).toBe("20");
-  }, 20000);
+  }, 20000); // default timeout: 10000
 
   // Check to make sure that after you reload the page it remembers all of the items in your cart
   it('Checking number of items in cart on screen after reload', async () => {
@@ -95,7 +96,7 @@ describe('Basic user flow for Website', () => {
     const size = itemElList.length;
     for (let i = 1; i < size; i++) {
       const shadowRoot = await itemElList[i].getProperty('shadowRoot');
-      const button = await shadowRoot.waitForSelector('button');
+      const button = await shadowRoot.$('button');
       const innerText = await button.getProperty('innerText');
       const value = await innerText.jsonValue();
       if (value != 'Remove from Cart') {allButtonsClicked = false;}
@@ -108,6 +109,11 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 5
     // At this point he item 'cart' in localStorage should be 
     // '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]', check to make sure it is
+    // let allItemsInCart = true;
+    const localStorage = await page.evaluate(() => {
+      return localStorage.getItem('cart');
+    });
+    expect(localStorage).toBe('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]');
   });
 
   // Checking to make sure that if you remove all of the items from the cart that the cart
@@ -117,7 +123,19 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 6
     // Go through and click "Remove from Cart" on every single <product-item>, just like above.
     // Once you have, check to make sure that #cart-count is now 0
-  }, 10000);
+    // let allItemsRemoved = true;
+    const itemElList = await page.$$('product-item');
+    const size = itemElList.length;
+    for (let i = 0; i < size; i++) {
+      const shadowRoot = await itemElList[i].getProperty('shadowRoot');
+      const button = await shadowRoot.$('button');
+      await button.click();
+    }
+    const cartCount = await page.$('#cart-count');
+    const innerText = await cartCount.getProperty('innerText');
+    const value = await innerText.jsonValue();
+    expect(value).toBe("0");
+  }, 30000); // default timeout: 10000
 
   // Checking to make sure that it remembers us removing everything from the cart
   // after we refresh the page
