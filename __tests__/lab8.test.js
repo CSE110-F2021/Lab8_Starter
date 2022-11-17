@@ -73,10 +73,10 @@ describe('Basic user flow for Website', () => {
     const size = itemElList.length;
     for (let i = 1; i < size; i++) {
       const shadowRoot = await itemElList[i].getProperty('shadowRoot');
-      const button = await shadowRoot.$('button');
+      const button = await shadowRoot.waitForSelector('button');
       await button.click();
     }
-    const cartCount = await page.$('#cart-count');
+    const cartCount = await page.waitForSelector('#cart-count');
     const innerText = await cartCount.getProperty('innerText');
     const value = await innerText.jsonValue();
     expect(value).toBe("20");
@@ -89,6 +89,18 @@ describe('Basic user flow for Website', () => {
     // Reload the page, then select all of the <product-item> elements, and check every
     // element to make sure that all of their buttons say "Remove from Cart".
     // Also check to make sure that #cart-count is still 20
+    let allButtonsClicked = true;
+    await page.reload();
+    const itemElList = await page.$$('product-item');
+    const size = itemElList.length;
+    for (let i = 1; i < size; i++) {
+      const shadowRoot = await itemElList[i].getProperty('shadowRoot');
+      const button = await shadowRoot.waitForSelector('button');
+      const innerText = await button.getProperty('innerText');
+      const value = await innerText.jsonValue();
+      if (value != 'Remove from Cart') {allButtonsClicked = false;}
+    }
+    expect(allButtonsClicked).toBe(true);
   }, 10000);
 
   // Check to make sure that the cart in localStorage is what you expect
