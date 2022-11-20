@@ -20,3 +20,19 @@ test('858-(319)-5053 is NOT a phone number', () => {
     expect(functions.isPhoneNumber('8587-(319)-5053')).toBe(false);
 });
 
+// isEmail Test
+test('xul007@ucsd.edu is an Email', () => {
+    expect(functions.isEmail('xul007@ucsd.edu')).toBe(true);
+});
+
+test('imbatman@batman.com is an Email', () => {
+    expect(functions.isEmail('imbatman@batman.com')).toBe(true);
+});
+
+test('imbatman is NOT an Email', () => {
+    expect(functions.isEmail('imbatman')).toBe(false);
+});
+
+test('@batman.com is NOT an Email', () => {
+    expect(functions.isEmail('@batman.com')).toBe(false);
+});
