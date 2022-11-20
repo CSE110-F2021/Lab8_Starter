@@ -36,3 +36,37 @@ test('imbatman is NOT an Email', () => {
 test('@batman.com is NOT an Email', () => {
     expect(functions.isEmail('@batman.com')).toBe(false);
 });
+
+// isStrongPassword Test
+test('ImBatman is a strong password', () => {
+    expect(functions.isStrongPassword('ImBatman')).toBe(true);
+});
+
+test('ImBatman_U2 is a strong password', () => {
+    expect(functions.isStrongPassword('ImBatman_U2')).toBe(true);
+});
+
+test('1234567 is NOT a strong password', () => {
+    expect(functions.isStrongPassword('1234567')).toBe(false);
+});
+
+test('What are you doing? is NOT a strong password', () => {
+    expect(functions.isStrongPassword('What are you doing?')).toBe(false);
+});
+
+// isDate Test
+test('1/1/1111 is a date', () => {
+    expect(functions.isDate('1/1/1111')).toBe(true);
+});
+
+test('20/20/2020 is a date', () => {
+    expect(functions.isDate('20/20/2020')).toBe(true);
+});
+
+test('1/1/11111 is NOT a date', () => {
+    expect(functions.isDate('1/1/11111')).toBe(false);
+});
+
+test('//1111 is NOT a date', () => {
+    expect(functions.isDate('//1111')).toBe(false);
+});
