@@ -70,3 +70,20 @@ test('1/1/11111 is NOT a date', () => {
 test('//1111 is NOT a date', () => {
     expect(functions.isDate('//1111')).toBe(false);
 });
+
+// isHexColor Test
+test('FFFFFF is a hex color', () => {
+    expect(functions.isHexColor('FFFFFF')).toBe(true);
+});
+
+test('000000 is a hex color', () => {
+    expect(functions.isHexColor('000000')).toBe(true);
+});
+
+test('0 is NOT a hex color', () => {
+    expect(functions.isHexColor('0')).toBe(false);
+});
+
+test('F is NOT a hex color', () => {
+    expect(functions.isHexColor('F')).toBe(false);
+});
