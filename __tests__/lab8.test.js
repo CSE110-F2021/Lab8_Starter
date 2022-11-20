@@ -81,7 +81,7 @@ describe('Basic user flow for Website', () => {
     const innerText = await cartCount.getProperty('innerText');
     const value = await innerText.jsonValue();
     expect(value).toBe("20");
-  }, 20000); // default timeout: 10000
+  }, 30000); // default timeout: 10000
 
   // Check to make sure that after you reload the page it remembers all of the items in your cart
   it('Checking number of items in cart on screen after reload', async () => {
@@ -135,7 +135,7 @@ describe('Basic user flow for Website', () => {
     const innerText = await cartCount.getProperty('innerText');
     const value = await innerText.jsonValue();
     expect(value).toBe("0");
-  }, 30000); // default timeout: 10000
+  }, 40000); // default timeout: 10000
 
   // Checking to make sure that it remembers us removing everything from the cart
   // after we refresh the page
@@ -161,7 +161,7 @@ describe('Basic user flow for Website', () => {
     const value = await innerText.jsonValue();
     expect(value).toBe("0");
     expect(allButtonsUnclicked).toBe(true);
-  }, 10000);
+  }, 30000); // default: 10000
 
   // Checking to make sure that localStorage for the cart is as we'd expect for the
   // cart being empty
